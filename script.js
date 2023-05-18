@@ -9,7 +9,7 @@ function addTask() {
     li.innerHTML = inputBox.value;
     listContainer.appendChild(li);
     let span = document.createElement("span");
-    span.innerHTML = "\u00d7";
+    span.innerHTML = `${getCurrentDate()}`;
     li.appendChild(span);
   }
   inputBox.value = "";
@@ -22,10 +22,11 @@ listContainer.addEventListener(
     if (e.target.tagName === "LI") {
       e.target.classList.toggle("checked");
       saveData();
-    } else if (e.target.tagName === "SPAN") {
-      e.target.parentElement.remove();
-      saveData();
     }
+    // else if (e.target.tagName === "SPAN") {
+    //   e.target.parentElement.remove();
+    //   saveData();
+    // }
   },
   false
 );
@@ -35,5 +36,14 @@ function saveData() {
 
 function showTask() {
   listContainer.innerHTML = localStorage.getItem("data");
+}
+
+function getCurrentDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
 showTask();
